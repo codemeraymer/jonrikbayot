@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bakla ka?</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --text-color: #ffffff;
+            --yes-button-color: #4CAF50;
+            --no-button-color: #f44336;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            width: 90%;
+            max-width: 500px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        button {
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        #yesBtn {
+            background-color: var(--yes-button-color);
+            color: var(--text-color);
+        }
+
+        #yesBtn:hover {
+            background-color: #45a049;
+            transform: scale(1.05);
+        }
+
+        #noBtn {
+            background-color: var(--no-button-color);
+            color: var(--text-color);
+            position: relative;
+        }
+
+        #noBtn:hover {
+            background-color: #da190b;
+        }
+
+        #result {
+            font-size: 1.5rem;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                margin-bottom: 1rem;
+            }
+
+            button {
+                font-size: 0.9rem;
+                padding: 0.6rem 1.2rem;
+            }
+
+            #result {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bakla ka?</h1>
+        <div class="buttons">
+            <button id="yesBtn">Yes</button>
+            <button id="noBtn">No</button>
+        </div>
+        <div id="result" aria-live="polite"></div>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const result = document.getElementById('result');
+        const container = document.querySelector('.container');
+
+        yesBtn.addEventListener('click', () => {
+            result.textContent = 'ARAM NAMON MAN HAHAHA';
+            result.style.opacity = '1';
+            noBtn.style.display = 'none';
+            container.style.animation = 'shake 0.5s';
+            container.style.animationIterationCount = 'infinite';
+        });
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('focus', moveButton);
+
+        function moveButton() {
+            const containerRect = container.getBoundingClientRect();
+            const btnRect = noBtn.getBoundingClientRect();
+
+            const maxX = containerRect.width - btnRect.width;
+            const maxY = containerRect.height - btnRect.height;
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            noBtn.style.position = 'absolute';
+            noBtn.style.left = `${randomX}px`;
+            noBtn.style.top = `${randomY}px`;
+        }
+
+        // Initial position for the "No" button
+        moveButton();
+
+        // Ensure the "No" button stays within the container on window resize
+        window.addEventListener('resize', moveButton);
+    </script>
+</body>
+</html>
